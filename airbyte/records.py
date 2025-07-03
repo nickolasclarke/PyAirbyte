@@ -141,9 +141,15 @@ class StreamRecordHandler:
         # Store a map from all key versions (normalized and pretty-cased) to their normalized
         # version.
         self.quick_lookup = {
-            key: self._normalizer.normalize(key)
-            if self._normalize_keys
-            else self.to_display_case(key)
+            key: (
+                "undefined"
+                if not key
+                else (
+                    self._normalizer.normalize(key)
+                    if self._normalize_keys
+                    else self.to_display_case(key)
+                )
+            )
             for key in set(self._expected_keys) | set(self._pretty_case_lookup.values())
         }
 
