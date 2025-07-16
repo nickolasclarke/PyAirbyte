@@ -124,7 +124,7 @@ class BigQueryTypeConverter(SQLTypeConverter):
             # Comprehensive handling for numeric types
         if isinstance(sql_type, (sqlalchemy.types.DECIMAL, sqlalchemy.types.NUMERIC)):
             # Force to BigQuery's FLOAT64 to avoid precision errors
-            return sqlalchemy_types.Numeric(precision=38, asdecimal=True)
+            return sqlalchemy_types.Float(asdecimal=True)
 
         return sql_type
 
