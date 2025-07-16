@@ -16,6 +16,7 @@ from overrides import overrides
 from pydantic import Field
 from sqlalchemy import types as sqlalchemy_types
 from sqlalchemy.engine import make_url
+from sqlalchemy_bigquery import _types as sqlalchemy_bigquery_types
 
 from airbyte import exceptions as exc
 from airbyte._writers.jsonl import JsonlWriter
@@ -124,7 +125,8 @@ class BigQueryTypeConverter(SQLTypeConverter):
             # Comprehensive handling for numeric types
         if isinstance(sql_type, (sqlalchemy.types.DECIMAL, sqlalchemy.types.NUMERIC)):
             # Force to BigQuery's FLOAT64 to avoid precision errors
-            return sqlalchemy_types.Numeric(precision=38, scale=9, asdecimal=True)
+            return sqlalchemy_bigquery_types.FLOAT64()
+            # return sqlalchemy_types.Numeric(precision=38, scale=9, asdecimal=True)
 
         return sql_type
 
